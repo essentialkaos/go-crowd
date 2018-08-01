@@ -100,26 +100,7 @@ func (api *API) GetUser(userName string, withAttributes bool) (*User, error) {
 
 // GetUserAttributes returns a list of user attributes
 func (api *API) GetUserAttributes(userName string) ([]*Attribute, error) {
-	result := &struct {
-		Attributes []*Attribute `xml:"attribute"`
-	}{}
-	statusCode, err := api.doRequest(
-		"GET", "rest/usermanagement/1/user/attribute?username="+userName,
-		result, nil,
-	)
-
-	if err != nil {
-		return nil, err
-	}
-
-	switch statusCode {
-	case 200:
-		return result.Attributes, nil
-	case 403:
-		return nil, ErrNoPerms
-	default:
-		return nil, makeUnknownError(statusCode)
-	}
+	return api.getAttributes("rest/usermanagement/1/user/attribute?username=" + userName)
 }
 
 // GetUserGroups returns the groups that the user is a member of
@@ -183,11 +164,16 @@ func (api *API) GetGroup(groupName string, withAttributes bool) (*Group, error) 
 
 // GetGroupAttributes returns a list of group attributes
 func (api *API) GetGroupAttributes(groupName string) ([]*Attribute, error) {
+	return api.getAttributes("rest/usermanagement/1/group/attribute?groupname=" + groupName)
+}
+
+// GetGroupUsers returns the users that are members of the specified group
+func (api *API) GetGroupUsers(groupName, groupType string) ([]*User, error) {
 	result := &struct {
-		Attributes []*Attribute `xml:"attribute"`
+		Users []*User `xml:"user"`
 	}{}
 	statusCode, err := api.doRequest(
-		"GET", "rest/usermanagement/1/group/attribute?groupname="+groupName,
+		"GET", "rest/usermanagement/1/group/user/"+groupType+"?expand=user&groupname="+groupName,
 		result, nil,
 	)
 
@@ -197,7 +183,7 @@ func (api *API) GetGroupAttributes(groupName string) ([]*Attribute, error) {
 
 	switch statusCode {
 	case 200:
-		return result.Attributes, nil
+		return result.Users, nil
 	case 403:
 		return nil, ErrNoPerms
 	default:
@@ -207,50 +193,12 @@ func (api *API) GetGroupAttributes(groupName string) ([]*Attribute, error) {
 
 // GetGroupDirectUsers returns the users that are direct members of the specified group
 func (api *API) GetGroupDirectUsers(groupName string) ([]*User, error) {
-	result := &struct {
-		Users []*User `xml:"user"`
-	}{}
-	statusCode, err := api.doRequest(
-		"GET", "rest/usermanagement/1/group/user/direct?expand=user&groupname="+groupName,
-		result, nil,
-	)
-
-	if err != nil {
-		return nil, err
-	}
-
-	switch statusCode {
-	case 200:
-		return result.Users, nil
-	case 403:
-		return nil, ErrNoPerms
-	default:
-		return nil, makeUnknownError(statusCode)
-	}
+	return api.GetGroupUsers(groupName, GROUP_DIRECT)
 }
 
 // GetGroupNestedUsers returns the users that are nested members of the specified group
 func (api *API) GetGroupNestedUsers(groupName string) ([]*User, error) {
-	result := &struct {
-		Users []*User `xml:"user"`
-	}{}
-	statusCode, err := api.doRequest(
-		"GET", "rest/usermanagement/1/group/user/nested?expand=user&groupname="+groupName,
-		result, nil,
-	)
-
-	if err != nil {
-		return nil, err
-	}
-
-	switch statusCode {
-	case 200:
-		return result.Users, nil
-	case 403:
-		return nil, ErrNoPerms
-	default:
-		return nil, makeUnknownError(statusCode)
-	}
+	return api.GetGroupUsers(groupName, GROUP_NESTED)
 }
 
 // GetMemberships returns full details of all group memberships, with users and
@@ -319,6 +267,30 @@ func (api *API) SearchGroups(cql string) ([]*Group, error) {
 	switch statusCode {
 	case 200:
 		return result.Groups, nil
+	case 403:
+		return nil, ErrNoPerms
+	default:
+		return nil, makeUnknownError(statusCode)
+	}
+}
+
+// ////////////////////////////////////////////////////////////////////////////////// //
+
+// getAttributes fetch attributes
+func (api *API) getAttributes(url string) ([]*Attribute, error) {
+	result := &struct {
+		Attributes []*Attribute `xml:"attribute"`
+	}{}
+
+	statusCode, err := api.doRequest("GET", url, result, nil)
+
+	if err != nil {
+		return nil, err
+	}
+
+	switch statusCode {
+	case 200:
+		return result.Attributes, nil
 	case 403:
 		return nil, ErrNoPerms
 	default:
