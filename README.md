@@ -38,7 +38,31 @@ go get -u pkg.re/essentialkaos/go-crowd.v1
 ### Usage example
 
 ```go
-STUB
+package main
+
+import (
+  "fmt"
+  "pkg.re/essentialkaos/go-crowd.v1"
+)
+
+func main() {
+  api, err := crowd.NewAPI("https://crowd.domain.com/crowd/", "myapp", "MySuppaPAssWOrd")
+  api.SetUserAgent("MyApp", "1.2.3")
+
+  if err != nil {
+    fmt.Printf("Error: %v\n", err)
+    return
+  }
+
+  user, err := api.GetUser("john", true)
+
+  if err != nil {
+    fmt.Printf("Error: %v\n", err)
+    return
+  }
+
+  fmt.Println("%-v\n", user)
+}
 ```
 
 ### Build Status
