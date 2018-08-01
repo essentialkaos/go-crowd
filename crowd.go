@@ -122,13 +122,13 @@ func (api *API) GetUserAttributes(userName string) ([]*Attribute, error) {
 	}
 }
 
-// GetUserDirectGroups returns the groups that the user is a direct member of
-func (api *API) GetUserDirectGroups(userName string) ([]*Group, error) {
+// GetUserGroups returns the groups that the user is a member of
+func (api *API) GetUserGroups(userName, groupType string) ([]*Group, error) {
 	result := &struct {
 		Groups []*Group `xml:"group"`
 	}{}
 	statusCode, err := api.doRequest(
-		"GET", "rest/usermanagement/1/user/group/direct?expand=group&username="+userName,
+		"GET", "rest/usermanagement/1/user/group/"+groupType+"?expand=group&username="+userName,
 		result, nil,
 	)
 
@@ -146,28 +146,14 @@ func (api *API) GetUserDirectGroups(userName string) ([]*Group, error) {
 	}
 }
 
+// GetUserDirectGroups returns the groups that the user is a direct member of
+func (api *API) GetUserDirectGroups(userName string) ([]*Group, error) {
+	return api.GetUserGroups(userName, GROUP_DIRECT)
+}
+
 // GetUserNestedGroups returns the groups that the user is a nested member of
 func (api *API) GetUserNestedGroups(userName string) ([]*Group, error) {
-	result := &struct {
-		Groups []*Group `xml:"group"`
-	}{}
-	statusCode, err := api.doRequest(
-		"GET", "rest/usermanagement/1/user/group/nested?expand=group&username="+userName,
-		result, nil,
-	)
-
-	if err != nil {
-		return nil, err
-	}
-
-	switch statusCode {
-	case 200:
-		return result.Groups, nil
-	case 403:
-		return nil, ErrNoPerms
-	default:
-		return nil, makeUnknownError(statusCode)
-	}
+	return api.GetUserGroups(userName, GROUP_NESTED)
 }
 
 // GetGroup returns a group
