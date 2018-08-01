@@ -1,0 +1,33 @@
+package crowd
+
+// ////////////////////////////////////////////////////////////////////////////////// //
+//                                                                                    //
+//                     Copyright (c) 2009-2018 ESSENTIAL KAOS                         //
+//        Essential Kaos Open Source License <https://essentialkaos.com/ekol>         //
+//                                                                                    //
+// ////////////////////////////////////////////////////////////////////////////////// //
+
+import (
+	"testing"
+
+	. "pkg.re/check.v1"
+)
+
+// ////////////////////////////////////////////////////////////////////////////////// //
+
+func Test(t *testing.T) { TestingT(t) }
+
+type CrowdSuite struct{}
+
+// ////////////////////////////////////////////////////////////////////////////////// //
+
+var _ = Suite(&CrowdSuite{})
+
+// ////////////////////////////////////////////////////////////////////////////////// //
+
+func (s *CrowdSuite) TestBasic(c *C) {
+	api, err := NewAPI("https://domain.com", "john", "qwerty1234")
+
+	c.Assert(api, NotNil)
+	c.Assert(err, IsNil)
+}
