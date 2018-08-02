@@ -14,6 +14,7 @@ import (
 	"fmt"
 	"net/url"
 	"runtime"
+	"strings"
 	"time"
 
 	"github.com/erikdubbelboer/fasthttp"
@@ -64,6 +65,17 @@ func NewAPI(url, username, password string) (*API, error) {
 		url:       url,
 		basicAuth: genBasicAuthHeader(username, password),
 	}, nil
+}
+
+// SimplifyAttributes convert slice with attributes to map name->value
+func SimplifyAttributes(attrs []*Attribute) map[string]string {
+	result := make(map[string]string)
+
+	for _, attr := range attrs {
+		result[attr.Name] = strings.Join(attr.Values, " ")
+	}
+
+	return result
 }
 
 // SetUserAgent set user-agent string based on app name and version
