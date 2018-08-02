@@ -51,12 +51,12 @@ type Membership struct {
 
 // UserInfo contains basic user info (username)
 type UserInfo struct {
-	Username string `xml:"name,attr"`
+	Name string `xml:"name,attr"`
 }
 
 // User contains info about user
 type User struct {
-	Username    string       `xml:"name,attr"`
+	Name        string       `xml:"name,attr"`
 	FirstName   string       `xml:"first-name"`
 	LastName    string       `xml:"last-name"`
 	DisplayName string       `xml:"display-name"`
@@ -70,7 +70,7 @@ type User struct {
 
 // String convert user info to string
 func (u *UserInfo) String() string {
-	return u.Username
+	return u.Name
 }
 
 // String convert attribute to string
