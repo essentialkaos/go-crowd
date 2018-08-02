@@ -75,7 +75,7 @@ func (api *API) SetUserAgent(app, version string) {
 
 // GetUser returns a user
 func (api *API) GetUser(userName string, withAttributes bool) (*User, error) {
-	url := "rest/usermanagement/1/user?username=" + userName
+	url := "rest/usermanagement/1/user?username=" + esc(userName)
 
 	if withAttributes {
 		url += "&expand=attributes"
@@ -100,7 +100,7 @@ func (api *API) GetUser(userName string, withAttributes bool) (*User, error) {
 
 // GetUserAttributes returns a list of user attributes
 func (api *API) GetUserAttributes(userName string) ([]*Attribute, error) {
-	return api.getAttributes("rest/usermanagement/1/user/attribute?username=" + userName)
+	return api.getAttributes("rest/usermanagement/1/user/attribute?username=" + esc(userName))
 }
 
 // GetUserGroups returns the groups that the user is a member of
@@ -109,7 +109,7 @@ func (api *API) GetUserGroups(userName, groupType string) ([]*Group, error) {
 		Groups []*Group `xml:"group"`
 	}{}
 	statusCode, err := api.doRequest(
-		"GET", "rest/usermanagement/1/user/group/"+groupType+"?expand=group&username="+userName,
+		"GET", "rest/usermanagement/1/user/group/"+esc(groupType)+"?expand=group&username="+esc(userName),
 		result, nil,
 	)
 
@@ -139,7 +139,7 @@ func (api *API) GetUserNestedGroups(userName string) ([]*Group, error) {
 
 // GetGroup returns a group
 func (api *API) GetGroup(groupName string, withAttributes bool) (*Group, error) {
-	url := "rest/usermanagement/1/group?groupname=" + groupName
+	url := "rest/usermanagement/1/group?groupname=" + esc(groupName)
 
 	if withAttributes {
 		url += "&expand=attributes"
@@ -164,7 +164,7 @@ func (api *API) GetGroup(groupName string, withAttributes bool) (*Group, error) 
 
 // GetGroupAttributes returns a list of group attributes
 func (api *API) GetGroupAttributes(groupName string) ([]*Attribute, error) {
-	return api.getAttributes("rest/usermanagement/1/group/attribute?groupname=" + groupName)
+	return api.getAttributes("rest/usermanagement/1/group/attribute?groupname=" + esc(groupName))
 }
 
 // GetGroupUsers returns the users that are members of the specified group
@@ -173,7 +173,7 @@ func (api *API) GetGroupUsers(groupName, groupType string) ([]*User, error) {
 		Users []*User `xml:"user"`
 	}{}
 	statusCode, err := api.doRequest(
-		"GET", "rest/usermanagement/1/group/user/"+groupType+"?expand=user&groupname="+groupName,
+		"GET", "rest/usermanagement/1/group/user/"+esc(groupType)+"?expand=user&groupname="+esc(groupName),
 		result, nil,
 	)
 
