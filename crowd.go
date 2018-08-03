@@ -37,7 +37,7 @@ var (
 	ErrInitEmptyURL      = errors.New("URL can't be empty")
 	ErrInitEmptyUser     = errors.New("User can't be empty")
 	ErrInitEmptyPassword = errors.New("Password can't be empty")
-	ErrNoPerms           = errors.New("User does not have permission to use crowd")
+	ErrNoPerms           = errors.New("User does not have permission to use Crowd")
 )
 
 // ////////////////////////////////////////////////////////////////////////////////// //
@@ -341,14 +341,7 @@ func (api *API) doRequest(method, uri string, result, body interface{}) (int, er
 	statusCode := resp.StatusCode()
 
 	if statusCode != 200 && statusCode < 500 {
-		e := &crowdError{}
-		err = xml.Unmarshal(resp.Body(), e)
-
-		if err != nil {
-			return statusCode, err
-		}
-
-		return statusCode, e.Error()
+		return statusCode, decodeInternalError(resp.Body())
 	}
 
 	if result == nil {
@@ -378,6 +371,18 @@ func (api *API) acquireRequest(method, uri string) *fasthttp.Request {
 }
 
 // ////////////////////////////////////////////////////////////////////////////////// //
+
+// decodeInternalError decode xml-encoded error
+func decodeInternalError(data []byte) error {
+	ce := &crowdError{}
+	err := xml.Unmarshal(data, ce)
+
+	if err != nil {
+		return nil
+	}
+
+	return ce.Error()
+}
 
 // getUserAgent generate user-agent string for client
 func getUserAgent(app, version string) string {
