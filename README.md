@@ -3,7 +3,7 @@
 <p align="center"><a href="#installation">Installation</a> • <a href="#usage-example">Usage example</a> • <a href="#build-status">Build Status</a> • <a href="#license">License</a></p>
 
 <p align="center">
-  <a href="https://godoc.org/pkg.re/essentialkaos/go-crowd.v1"><img src="https://godoc.org/pkg.re/essentialkaos/go-crowd.v1?status.svg"></a>
+  <a href="https://godoc.org/pkg.re/essentialkaos/go-crowd.v2"><img src="https://godoc.org/pkg.re/essentialkaos/go-crowd.v2?status.svg"></a>
   <a href="https://goreportcard.com/report/github.com/essentialkaos/go-crowd"><img src="https://goreportcard.com/badge/github.com/essentialkaos/go-crowd"></a>
   <a href="https://travis-ci.org/essentialkaos/go-crowd"><img src="https://travis-ci.org/essentialkaos/go-crowd.svg"></a>
   <a href="https://codebeat.co/projects/github-com-essentialkaos-go-crowd-master"><img alt="codebeat badge" src="https://codebeat.co/badges/9aaa0412-47a5-4555-924e-9c9e1d61a3e4" /></a>
@@ -27,13 +27,13 @@ git config --global http.https://pkg.re.followRedirects true
 Make sure you have a working Go 1.9+ workspace (_[instructions](https://golang.org/doc/install)_), then:
 
 ````
-go get pkg.re/essentialkaos/go-crowd.v1
+go get pkg.re/essentialkaos/go-crowd.v2
 ````
 
 For update to latest stable release, do:
 
 ```
-go get -u pkg.re/essentialkaos/go-crowd.v1
+go get -u pkg.re/essentialkaos/go-crowd.v2
 ```
 
 ### Usage example
@@ -43,7 +43,7 @@ package main
 
 import (
   "fmt"
-  "pkg.re/essentialkaos/go-crowd.v1"
+  "pkg.re/essentialkaos/go-crowd.v2"
 )
 
 func main() {

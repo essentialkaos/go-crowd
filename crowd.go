@@ -35,20 +35,20 @@ type API struct {
 // API errors
 var (
 	ErrInitEmptyURL      = errors.New("URL can't be empty")
-	ErrInitEmptyUser     = errors.New("User can't be empty")
+	ErrInitEmptyApp      = errors.New("App can't be empty")
 	ErrInitEmptyPassword = errors.New("Password can't be empty")
-	ErrNoPerms           = errors.New("User does not have permission to use Crowd")
+	ErrNoPerms           = errors.New("App does not have permission to use Crowd")
 )
 
 // ////////////////////////////////////////////////////////////////////////////////// //
 
 // NewAPI create new API struct
-func NewAPI(url, username, password string) (*API, error) {
+func NewAPI(url, app, password string) (*API, error) {
 	switch {
 	case url == "":
 		return nil, ErrInitEmptyURL
-	case username == "":
-		return nil, ErrInitEmptyUser
+	case app == "":
+		return nil, ErrInitEmptyApp
 	case password == "":
 		return nil, ErrInitEmptyPassword
 	}
@@ -63,7 +63,7 @@ func NewAPI(url, username, password string) (*API, error) {
 		},
 
 		url:       url,
-		basicAuth: genBasicAuthHeader(username, password),
+		basicAuth: genBasicAuthHeader(app, password),
 	}, nil
 }
 
