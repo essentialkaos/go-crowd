@@ -68,7 +68,7 @@ func NewAPI(url, username, password string) (*API, error) {
 }
 
 // SimplifyAttributes convert slice with attributes to map name->value
-func SimplifyAttributes(attrs []*Attribute) map[string]string {
+func SimplifyAttributes(attrs Attributes) map[string]string {
 	result := make(map[string]string)
 
 	for _, attr := range attrs {
@@ -111,7 +111,7 @@ func (api *API) GetUser(userName string, withAttributes bool) (*User, error) {
 }
 
 // GetUserAttributes returns a list of user attributes
-func (api *API) GetUserAttributes(userName string) ([]*Attribute, error) {
+func (api *API) GetUserAttributes(userName string) (Attributes, error) {
 	return api.getAttributes("rest/usermanagement/1/user/attribute?username=" + esc(userName))
 }
 
@@ -175,7 +175,7 @@ func (api *API) GetGroup(groupName string, withAttributes bool) (*Group, error) 
 }
 
 // GetGroupAttributes returns a list of group attributes
-func (api *API) GetGroupAttributes(groupName string) ([]*Attribute, error) {
+func (api *API) GetGroupAttributes(groupName string) (Attributes, error) {
 	return api.getAttributes("rest/usermanagement/1/group/attribute?groupname=" + esc(groupName))
 }
 
@@ -289,9 +289,9 @@ func (api *API) SearchGroups(cql string) ([]*Group, error) {
 // ////////////////////////////////////////////////////////////////////////////////// //
 
 // getAttributes fetch attributes
-func (api *API) getAttributes(url string) ([]*Attribute, error) {
+func (api *API) getAttributes(url string) (Attributes, error) {
 	result := &struct {
-		Attributes []*Attribute `xml:"attribute"`
+		Attributes Attributes `xml:"attribute"`
 	}{}
 
 	statusCode, err := api.doRequest("GET", url, result, nil)
