@@ -244,7 +244,7 @@ func (api *API) SearchUsers(cql string) ([]*User, error) {
 		Users []*User `xml:"user"`
 	}{}
 	statusCode, err := api.doRequest(
-		"GET", "rest/usermanagement/1/search?entity-type=user&&expand=user&restriction="+esc(cql),
+		"GET", "rest/usermanagement/1/search?entity-type=user&expand=user&restriction="+esc(cql),
 		result, nil,
 	)
 
@@ -268,7 +268,7 @@ func (api *API) SearchGroups(cql string) ([]*Group, error) {
 		Groups []*Group `xml:"group"`
 	}{}
 	statusCode, err := api.doRequest(
-		"GET", "rest/usermanagement/1/search?entity-type=group&&expand=group&restriction="+esc(cql),
+		"GET", "rest/usermanagement/1/search?entity-type=group&expand=group&restriction="+esc(cql),
 		result, nil,
 	)
 
