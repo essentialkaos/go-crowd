@@ -10,6 +10,7 @@ package crowd
 import (
 	"errors"
 	"fmt"
+	"strings"
 )
 
 // ////////////////////////////////////////////////////////////////////////////////// //
@@ -28,6 +29,9 @@ type crowdError struct {
 }
 
 // ////////////////////////////////////////////////////////////////////////////////// //
+
+// Attributes it is slice with attributes
+type Attributes []*Attribute
 
 // Attribute contains attribute info
 type Attribute struct {
@@ -56,14 +60,14 @@ type UserInfo struct {
 
 // User contains info about user
 type User struct {
-	Name        string       `xml:"name,attr"`
-	FirstName   string       `xml:"first-name"`
-	LastName    string       `xml:"last-name"`
-	DisplayName string       `xml:"display-name"`
-	Email       string       `xml:"email"`
-	Key         string       `xml:"key"`
-	IsActive    bool         `xml:"active"`
-	Attributes  []*Attribute `xml:"attributes>attribute"`
+	Name        string     `xml:"name,attr"`
+	FirstName   string     `xml:"first-name"`
+	LastName    string     `xml:"last-name"`
+	DisplayName string     `xml:"display-name"`
+	Email       string     `xml:"email"`
+	Key         string     `xml:"key"`
+	IsActive    bool       `xml:"active"`
+	Attributes  Attributes `xml:"attributes>attribute"`
 }
 
 // ////////////////////////////////////////////////////////////////////////////////// //
@@ -76,6 +80,47 @@ func (u *UserInfo) String() string {
 // String convert attribute to string
 func (a *Attribute) String() string {
 	return fmt.Sprintf("%s:%v", a.Name, a.Values)
+}
+
+// Has returns true if slice contains attribute with given name
+func (a Attributes) Has(name string) bool {
+	if len(a) == 0 {
+		return false
+	}
+
+	for _, attr := range a {
+		if attr.Name == name {
+			return true
+		}
+	}
+
+	return false
+}
+
+// GetList returns slice with values for attribute with given name
+func (a Attributes) GetList(name string) []string {
+	if len(a) == 0 {
+		return nil
+	}
+
+	for _, attr := range a {
+		if attr.Name == name {
+			return attr.Values
+		}
+	}
+
+	return nil
+}
+
+// Get returns merged values for attribute with given name
+func (a Attributes) Get(name string) string {
+	values := a.GetList(name)
+
+	if len(values) != 0 {
+		return strings.Join(values, " ")
+	}
+
+	return ""
 }
 
 // Error convert crowd errro to error struct

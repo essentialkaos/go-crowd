@@ -35,20 +35,20 @@ type API struct {
 // API errors
 var (
 	ErrInitEmptyURL      = errors.New("URL can't be empty")
-	ErrInitEmptyUser     = errors.New("User can't be empty")
+	ErrInitEmptyApp      = errors.New("App can't be empty")
 	ErrInitEmptyPassword = errors.New("Password can't be empty")
-	ErrNoPerms           = errors.New("User does not have permission to use Crowd")
+	ErrNoPerms           = errors.New("App does not have permission to use Crowd")
 )
 
 // ////////////////////////////////////////////////////////////////////////////////// //
 
 // NewAPI create new API struct
-func NewAPI(url, username, password string) (*API, error) {
+func NewAPI(url, app, password string) (*API, error) {
 	switch {
 	case url == "":
 		return nil, ErrInitEmptyURL
-	case username == "":
-		return nil, ErrInitEmptyUser
+	case app == "":
+		return nil, ErrInitEmptyApp
 	case password == "":
 		return nil, ErrInitEmptyPassword
 	}
@@ -63,12 +63,12 @@ func NewAPI(url, username, password string) (*API, error) {
 		},
 
 		url:       url,
-		basicAuth: genBasicAuthHeader(username, password),
+		basicAuth: genBasicAuthHeader(app, password),
 	}, nil
 }
 
 // SimplifyAttributes convert slice with attributes to map name->value
-func SimplifyAttributes(attrs []*Attribute) map[string]string {
+func SimplifyAttributes(attrs Attributes) map[string]string {
 	result := make(map[string]string)
 
 	for _, attr := range attrs {
@@ -111,7 +111,7 @@ func (api *API) GetUser(userName string, withAttributes bool) (*User, error) {
 }
 
 // GetUserAttributes returns a list of user attributes
-func (api *API) GetUserAttributes(userName string) ([]*Attribute, error) {
+func (api *API) GetUserAttributes(userName string) (Attributes, error) {
 	return api.getAttributes("rest/usermanagement/1/user/attribute?username=" + esc(userName))
 }
 
@@ -175,7 +175,7 @@ func (api *API) GetGroup(groupName string, withAttributes bool) (*Group, error) 
 }
 
 // GetGroupAttributes returns a list of group attributes
-func (api *API) GetGroupAttributes(groupName string) ([]*Attribute, error) {
+func (api *API) GetGroupAttributes(groupName string) (Attributes, error) {
 	return api.getAttributes("rest/usermanagement/1/group/attribute?groupname=" + esc(groupName))
 }
 
@@ -244,7 +244,7 @@ func (api *API) SearchUsers(cql string) ([]*User, error) {
 		Users []*User `xml:"user"`
 	}{}
 	statusCode, err := api.doRequest(
-		"GET", "rest/usermanagement/1/search?entity-type=user&&expand=user&restriction="+esc(cql),
+		"GET", "rest/usermanagement/1/search?entity-type=user&expand=user&restriction="+esc(cql),
 		result, nil,
 	)
 
@@ -268,7 +268,7 @@ func (api *API) SearchGroups(cql string) ([]*Group, error) {
 		Groups []*Group `xml:"group"`
 	}{}
 	statusCode, err := api.doRequest(
-		"GET", "rest/usermanagement/1/search?entity-type=group&&expand=group&restriction="+esc(cql),
+		"GET", "rest/usermanagement/1/search?entity-type=group&expand=group&restriction="+esc(cql),
 		result, nil,
 	)
 
@@ -289,9 +289,9 @@ func (api *API) SearchGroups(cql string) ([]*Group, error) {
 // ////////////////////////////////////////////////////////////////////////////////// //
 
 // getAttributes fetch attributes
-func (api *API) getAttributes(url string) ([]*Attribute, error) {
+func (api *API) getAttributes(url string) (Attributes, error) {
 	result := &struct {
-		Attributes []*Attribute `xml:"attribute"`
+		Attributes Attributes `xml:"attribute"`
 	}{}
 
 	statusCode, err := api.doRequest("GET", url, result, nil)
