@@ -8,6 +8,7 @@ package crowd
 // ////////////////////////////////////////////////////////////////////////////////// //
 
 import (
+	"encoding/xml"
 	"errors"
 	"fmt"
 	"strings"
@@ -47,6 +48,12 @@ type Group struct {
 	IsActive    bool   `xml:"active"`
 }
 
+// GroupAttributes contains group attributes
+type GroupAttributes struct {
+	XMLName    xml.Name     `xml:"attributes"`
+	Attributes []*Attribute `xml:"attribute"`
+}
+
 // Membership contains membership info
 type Membership struct {
 	Group string      `xml:"group,attr"`
@@ -65,9 +72,16 @@ type User struct {
 	LastName    string     `xml:"last-name"`
 	DisplayName string     `xml:"display-name"`
 	Email       string     `xml:"email"`
-	Key         string     `xml:"key"`
+	Key         string     `xml:"key,omitempty"`
 	IsActive    bool       `xml:"active"`
+	Password    string     `xml:"password>value,omitempty"`
 	Attributes  Attributes `xml:"attributes>attribute"`
+}
+
+// UserAttributes contains user attributes
+type UserAttributes struct {
+	XMLName    xml.Name     `xml:"attributes,omitempty"`
+	Attributes []*Attribute `xml:"attribute"`
 }
 
 // ////////////////////////////////////////////////////////////////////////////////// //

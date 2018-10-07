@@ -37,7 +37,9 @@ var (
 	ErrInitEmptyURL      = errors.New("URL can't be empty")
 	ErrInitEmptyApp      = errors.New("App can't be empty")
 	ErrInitEmptyPassword = errors.New("Password can't be empty")
-	ErrNoPerms           = errors.New("App does not have permission to use Crowd")
+	ErrNoPerms           = errors.New("Application does not have permission to use Crowd")
+	ErrUserNoFound       = errors.New("User could not be found")
+	ErrGroupNoFound      = errors.New("Group could not be found")
 )
 
 // ////////////////////////////////////////////////////////////////////////////////// //
@@ -112,7 +114,78 @@ func (api *API) GetUser(userName string, withAttributes bool) (*User, error) {
 
 // GetUserAttributes returns a list of user attributes
 func (api *API) GetUserAttributes(userName string) (Attributes, error) {
-	return api.getAttributes("rest/usermanagement/1/user/attribute?username=" + esc(userName))
+	result := &UserAttributes{}
+	statusCode, err := api.doRequest(
+		"GET", "rest/usermanagement/1/user/attribute?username="+esc(userName),
+		result, nil,
+	)
+
+	if err != nil {
+		return nil, err
+	}
+
+	switch statusCode {
+	case 200:
+		return result.Attributes, nil
+	case 403:
+		return nil, ErrNoPerms
+	case 404:
+		return nil, ErrUserNoFound
+	default:
+		return nil, makeUnknownError(statusCode)
+	}
+}
+
+// SetUserAttributes stores all the user attributes for an existing user
+func (api *API) SetUserAttributes(userName string, attrs *UserAttributes) error {
+	statusCode, err := api.doRequest(
+		"POST", "rest/usermanagement/1/user/attribute?username="+esc(userName),
+		nil, attrs,
+	)
+
+	if err != nil {
+		return err
+	}
+
+	switch statusCode {
+	case 204:
+		return nil
+	case 403:
+		return ErrNoPerms
+	case 404:
+		return ErrUserNoFound
+	default:
+		return makeUnknownError(statusCode)
+	}
+}
+
+// DeleteUserAttributes deletes a user attribute
+func (api *API) DeleteUserAttributes(userName, attrName string) error {
+	url := fmt.Sprintf(
+		"rest/usermanagement/1/user/attribute?username=%s&attributename=%s",
+		esc(userName), esc(attrName),
+	)
+
+	statusCode, err := api.doRequest("DELETE", url, nil, nil)
+
+	if err != nil {
+		return err
+	}
+
+	if err != nil {
+		return err
+	}
+
+	switch statusCode {
+	case 204:
+		return nil
+	case 403:
+		return ErrNoPerms
+	case 404:
+		return ErrUserNoFound
+	default:
+		return makeUnknownError(statusCode)
+	}
 }
 
 // GetUserGroups returns the groups that the user is a member of
@@ -120,10 +193,13 @@ func (api *API) GetUserGroups(userName, groupType string) ([]*Group, error) {
 	result := &struct {
 		Groups []*Group `xml:"group"`
 	}{}
-	statusCode, err := api.doRequest(
-		"GET", "rest/usermanagement/1/user/group/"+esc(groupType)+"?expand=group&username="+esc(userName),
-		result, nil,
+
+	url := fmt.Sprintf(
+		"rest/usermanagement/1/user/group/%s?expand=group&username=%s",
+		esc(groupType), esc(userName),
 	)
+
+	statusCode, err := api.doRequest("GET", url, result, nil)
 
 	if err != nil {
 		return nil, err
@@ -176,7 +252,78 @@ func (api *API) GetGroup(groupName string, withAttributes bool) (*Group, error) 
 
 // GetGroupAttributes returns a list of group attributes
 func (api *API) GetGroupAttributes(groupName string) (Attributes, error) {
-	return api.getAttributes("rest/usermanagement/1/group/attribute?groupname=" + esc(groupName))
+	result := &GroupAttributes{}
+	statusCode, err := api.doRequest(
+		"GET", "rest/usermanagement/1/group/attribute?groupname="+esc(groupName),
+		result, nil,
+	)
+
+	if err != nil {
+		return nil, err
+	}
+
+	switch statusCode {
+	case 200:
+		return result.Attributes, nil
+	case 403:
+		return nil, ErrNoPerms
+	case 404:
+		return nil, ErrGroupNoFound
+	default:
+		return nil, makeUnknownError(statusCode)
+	}
+}
+
+// SetGroupAttributes stores all the group attributes
+func (api *API) SetGroupAttributes(groupName string, attrs *GroupAttributes) error {
+	statusCode, err := api.doRequest(
+		"POST", "rest/usermanagement/1/group/attribute?groupname="+esc(groupName),
+		nil, attrs,
+	)
+
+	if err != nil {
+		return err
+	}
+
+	switch statusCode {
+	case 204:
+		return nil
+	case 403:
+		return ErrNoPerms
+	case 404:
+		return ErrGroupNoFound
+	default:
+		return makeUnknownError(statusCode)
+	}
+}
+
+// DeleteGroupAttributes deletes a group attribute
+func (api *API) DeleteGroupAttributes(groupName, attrName string) error {
+	url := fmt.Sprintf(
+		"rest/usermanagement/1/group/attribute?groupname=%s&attributename=%s",
+		esc(groupName), esc(attrName),
+	)
+
+	statusCode, err := api.doRequest("DELETE", url, nil, nil)
+
+	if err != nil {
+		return err
+	}
+
+	if err != nil {
+		return err
+	}
+
+	switch statusCode {
+	case 204:
+		return nil
+	case 403:
+		return ErrNoPerms
+	case 404:
+		return ErrUserNoFound
+	default:
+		return makeUnknownError(statusCode)
+	}
 }
 
 // GetGroupUsers returns the users that are members of the specified group
@@ -184,10 +331,13 @@ func (api *API) GetGroupUsers(groupName, groupType string) ([]*User, error) {
 	result := &struct {
 		Users []*User `xml:"user"`
 	}{}
-	statusCode, err := api.doRequest(
-		"GET", "rest/usermanagement/1/group/user/"+esc(groupType)+"?expand=user&groupname="+esc(groupName),
-		result, nil,
+
+	url := fmt.Sprintf(
+		"rest/usermanagement/1/group/user/%s?expand=user&groupname=%s",
+		esc(groupType), esc(groupName),
 	)
+
+	statusCode, err := api.doRequest("GET", url, result, nil)
 
 	if err != nil {
 		return nil, err
@@ -288,30 +438,6 @@ func (api *API) SearchGroups(cql string) ([]*Group, error) {
 
 // ////////////////////////////////////////////////////////////////////////////////// //
 
-// getAttributes fetch attributes
-func (api *API) getAttributes(url string) (Attributes, error) {
-	result := &struct {
-		Attributes Attributes `xml:"attribute"`
-	}{}
-
-	statusCode, err := api.doRequest("GET", url, result, nil)
-
-	if err != nil {
-		return nil, err
-	}
-
-	switch statusCode {
-	case 200:
-		return result.Attributes, nil
-	case 403:
-		return nil, ErrNoPerms
-	default:
-		return nil, makeUnknownError(statusCode)
-	}
-}
-
-// ////////////////////////////////////////////////////////////////////////////////// //
-
 // codebeat:disable[ARITY]
 
 // doRequest create and execute request
@@ -329,7 +455,7 @@ func (api *API) doRequest(method, uri string, result, body interface{}) (int, er
 			return -1, err
 		}
 
-		req.SetBody(bodyData)
+		req.SetBody(append([]byte(xml.Header), bodyData...))
 	}
 
 	err := api.Client.Do(req, resp)
@@ -362,6 +488,11 @@ func (api *API) acquireRequest(method, uri string) *fasthttp.Request {
 
 	if method != "GET" {
 		req.Header.SetMethod(method)
+	}
+
+	if method == "POST" {
+		req.Header.Set("Content-Type", "application/xml")
+		req.Header.Add("Accept", "application/xml")
 	}
 
 	// Set auth header
