@@ -320,7 +320,7 @@ func (api *API) DeleteGroupAttributes(groupName, attrName string) error {
 	case 403:
 		return ErrNoPerms
 	case 404:
-		return ErrUserNoFound
+		return ErrGroupNoFound
 	default:
 		return makeUnknownError(statusCode)
 	}
