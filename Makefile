@@ -11,7 +11,8 @@
 ################################################################################
 
 deps: ## Download dependencies
-	go get -d -v github.com/erikdubbelboer/fasthttp
+	git config --global http.https://pkg.re.followRedirects true
+	go get -d -v pkg.re/valyala/fasthttp.v1
 
 deps-test: ## Download dependencies for tests
 	git config --global http.https://pkg.re.followRedirects true
