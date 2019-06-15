@@ -1,7 +1,5 @@
 <p align="center"><a href="#readme"><img src="https://gh.kaos.st/go-crowd.svg"/></a></p>
 
-<p align="center"><a href="#installation">Installation</a> • <a href="#usage-example">Usage example</a> • <a href="#build-status">Build Status</a> • <a href="#license">License</a></p>
-
 <p align="center">
   <a href="https://godoc.org/pkg.re/essentialkaos/go-crowd.v3"><img src="https://godoc.org/pkg.re/essentialkaos/go-crowd.v3?status.svg"></a>
   <a href="https://goreportcard.com/report/github.com/essentialkaos/go-crowd"><img src="https://goreportcard.com/badge/github.com/essentialkaos/go-crowd"></a>
@@ -9,6 +7,10 @@
   <a href="https://codebeat.co/projects/github-com-essentialkaos-go-crowd-master"><img alt="codebeat badge" src="https://codebeat.co/badges/9aaa0412-47a5-4555-924e-9c9e1d61a3e4" /></a>
   <a href="https://essentialkaos.com/ekol"><img src="https://gh.kaos.st/ekol.svg"></a>
 </p>
+
+<p align="center"><a href="#installation">Installation</a> • <a href="#usage-example">Usage example</a> • <a href="#build-status">Build Status</a> • <a href="#license">License</a></p>
+
+<br/>
 
 `go-crowd` is a Go package for working with [Crowd REST API](https://developer.atlassian.com/server/crowd/crowd-rest-resources/).
 
@@ -22,7 +24,7 @@ Before the initial install allows git to use redirects for [pkg.re](https://gith
 git config --global http.https://pkg.re.followRedirects true
 ```
 
-Make sure you have a working Go 1.9+ workspace (_[instructions](https://golang.org/doc/install)_), then:
+Make sure you have a working Go 1.10+ workspace (_[instructions](https://golang.org/doc/install)_), then:
 
 ````
 go get pkg.re/essentialkaos/go-crowd.v3
