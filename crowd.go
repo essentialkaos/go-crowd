@@ -80,6 +80,18 @@ func SimplifyAttributes(attrs Attributes) map[string]string {
 	return result
 }
 
+// CreateUser creats a user
+func (api *API) CreateUser(user *User) error {
+	url := "rest/usermanagement/1/user"
+	statusCode, err := api.doRequest("POST", url, nil, user)
+	switch statusCode {
+	case 201:
+		return nil
+	default:
+		return fmt.Errorf("Request failed(status code %d): %v", statusCode, err)
+	}
+}
+
 // SetUserAgent set user-agent string based on app name and version
 func (api *API) SetUserAgent(app, version string) {
 	api.Client.Name = getUserAgent(app, version)
