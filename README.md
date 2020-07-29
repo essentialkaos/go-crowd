@@ -4,6 +4,7 @@
   <a href="https://godoc.org/pkg.re/essentialkaos/go-crowd.v3"><img src="https://godoc.org/pkg.re/essentialkaos/go-crowd.v3?status.svg"></a>
   <a href="https://goreportcard.com/report/github.com/essentialkaos/go-crowd"><img src="https://goreportcard.com/badge/github.com/essentialkaos/go-crowd"></a>
   <a href="https://travis-ci.com/essentialkaos/go-crowd"><img src="https://travis-ci.com/essentialkaos/go-crowd.svg"></a>
+  <a href="https://github.com/essentialkaos/go-crowd/actions?query=workflow%3ACodeQL"><img src="https://github.com/essentialkaos/go-crowd/workflows/CodeQL/badge.svg" /></a>
   <a href="https://codebeat.co/projects/github-com-essentialkaos-go-crowd-master"><img alt="codebeat badge" src="https://codebeat.co/badges/9aaa0412-47a5-4555-924e-9c9e1d61a3e4" /></a>
   <a href="https://essentialkaos.com/ekol"><img src="https://gh.kaos.st/ekol.svg"></a>
 </p>
