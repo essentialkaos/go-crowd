@@ -1,12 +1,12 @@
 <p align="center"><a href="#readme"><img src="https://gh.kaos.st/go-crowd.svg"/></a></p>
 
 <p align="center">
-  <a href="https://godoc.org/pkg.re/essentialkaos/go-crowd.v3"><img src="https://godoc.org/pkg.re/essentialkaos/go-crowd.v3?status.svg"></a>
+  <a href="https://pkg.go.dev/github.com/essentialkaos/go-crowd"><img src="https://pkg.go.dev/badge/github.com/essentialkaos/go-crowd" alt="PkgGoDev"></a>
   <a href="https://goreportcard.com/report/github.com/essentialkaos/go-crowd"><img src="https://goreportcard.com/badge/github.com/essentialkaos/go-crowd"></a>
   <a href="https://travis-ci.com/essentialkaos/go-crowd"><img src="https://travis-ci.com/essentialkaos/go-crowd.svg"></a>
   <a href="https://github.com/essentialkaos/go-crowd/actions?query=workflow%3ACodeQL"><img src="https://github.com/essentialkaos/go-crowd/workflows/CodeQL/badge.svg" /></a>
   <a href="https://codebeat.co/projects/github-com-essentialkaos-go-crowd-master"><img alt="codebeat badge" src="https://codebeat.co/badges/9aaa0412-47a5-4555-924e-9c9e1d61a3e4" /></a>
-  <a href="https://essentialkaos.com/ekol"><img src="https://gh.kaos.st/ekol.svg"></a>
+  <a href="#license"><img src="https://gh.kaos.st/apache2.svg"></a>
 </p>
 
 <p align="center"><a href="#installation">Installation</a> • <a href="#usage-example">Usage example</a> • <a href="#build-status">Build Status</a> • <a href="#license">License</a></p>
@@ -76,6 +76,6 @@ func main() {
 
 ### License
 
-[EKOL](https://essentialkaos.com/ekol)
+[Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0)
 
 <p align="center"><a href="https://essentialkaos.com"><img src="https://gh.kaos.st/ekgh.svg"/></a></p>
