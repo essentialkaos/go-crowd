@@ -1,7 +1,7 @@
 <p align="center"><a href="#readme"><img src="https://gh.kaos.st/go-crowd.svg"/></a></p>
 
 <p align="center">
-  <a href="https://godoc.org/pkg.re/essentialkaos/go-crowd.v3"><img src="https://godoc.org/pkg.re/essentialkaos/go-crowd.v3?status.svg"></a>
+  <a href="https://pkg.go.dev/github.com/essentialkaos/go-crowd"><img src="https://pkg.go.dev/badge/github.com/essentialkaos/go-crowd" alt="PkgGoDev"></a>
   <a href="https://goreportcard.com/report/github.com/essentialkaos/go-crowd"><img src="https://goreportcard.com/badge/github.com/essentialkaos/go-crowd"></a>
   <a href="https://travis-ci.com/essentialkaos/go-crowd"><img src="https://travis-ci.com/essentialkaos/go-crowd.svg"></a>
   <a href="https://github.com/essentialkaos/go-crowd/actions?query=workflow%3ACodeQL"><img src="https://github.com/essentialkaos/go-crowd/workflows/CodeQL/badge.svg" /></a>
