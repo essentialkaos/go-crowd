@@ -3,7 +3,7 @@
 <p align="center">
   <a href="https://pkg.go.dev/github.com/essentialkaos/go-crowd"><img src="https://pkg.go.dev/badge/github.com/essentialkaos/go-crowd" alt="PkgGoDev"></a>
   <a href="https://goreportcard.com/report/github.com/essentialkaos/go-crowd"><img src="https://goreportcard.com/badge/github.com/essentialkaos/go-crowd"></a>
-  <a href="https://travis-ci.com/essentialkaos/go-crowd"><img src="https://travis-ci.com/essentialkaos/go-crowd.svg"></a>
+  <a href="https://github.com/essentialkaos/go-crowd/actions"><img src="https://github.com/essentialkaos/go-crowd/workflows/CI/badge.svg" alt="GitHub Actions Status" /></a>
   <a href="https://github.com/essentialkaos/go-crowd/actions?query=workflow%3ACodeQL"><img src="https://github.com/essentialkaos/go-crowd/workflows/CodeQL/badge.svg" /></a>
   <a href="https://codebeat.co/projects/github-com-essentialkaos-go-crowd-master"><img alt="codebeat badge" src="https://codebeat.co/badges/9aaa0412-47a5-4555-924e-9c9e1d61a3e4" /></a>
   <a href="#license"><img src="https://gh.kaos.st/apache2.svg"></a>
@@ -19,13 +19,7 @@ _**Note, that this is beta software, so it's entirely possible that there will b
 
 ### Installation
 
-Before the initial install allows git to use redirects for [pkg.re](https://github.com/essentialkaos/pkgre) service (_reason why you should do this described [here](https://github.com/essentialkaos/pkgre#git-support)_):
-
-```
-git config --global http.https://pkg.re.followRedirects true
-```
-
-Make sure you have a working Go 1.13+ workspace (_[instructions](https://golang.org/doc/install)_), then:
+Make sure you have a working Go 1.14+ workspace (_[instructions](https://golang.org/doc/install)_), then:
 
 ````
 go get pkg.re/essentialkaos/go-crowd.v3
@@ -71,8 +65,8 @@ func main() {
 
 | Branch     | Status |
 |------------|--------|
-| `master` (_Stable_) | [![Build Status](https://travis-ci.com/essentialkaos/go-crowd.svg?branch=master)](https://travis-ci.com/essentialkaos/go-crowd) |
-| `develop` (_Unstable_) | [![Build Status](https://travis-ci.com/essentialkaos/go-crowd.svg?branch=develop)](https://travis-ci.com/essentialkaos/go-crowd) |
+| `master` (_Stable_) | [![CI](https://github.com/essentialkaos/go-crowd/workflows/CI/badge.svg?branch=master)](https://github.com/essentialkaos/go-crowd/actions) |
+| `develop` (_Unstable_) | [![CI](https://github.com/essentialkaos/go-crowd/workflows/CI/badge.svg?branch=develop)](https://github.com/essentialkaos/go-crowd/actions) |
 
 ### License
 
