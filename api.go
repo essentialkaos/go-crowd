@@ -67,6 +67,7 @@ type UserInfo struct {
 
 // User contains info about user
 type User struct {
+	XMLName     xml.Name   `xml:"user"`
 	Name        string     `xml:"name,attr"`
 	FirstName   string     `xml:"first-name"`
 	LastName    string     `xml:"last-name"`
