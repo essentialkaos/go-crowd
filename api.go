@@ -67,15 +67,15 @@ type UserInfo struct {
 
 // User contains info about user
 type User struct {
+	Attributes  Attributes `xml:"attributes>attribute"`
 	Name        string     `xml:"name,attr"`
 	FirstName   string     `xml:"first-name"`
 	LastName    string     `xml:"last-name"`
 	DisplayName string     `xml:"display-name"`
 	Email       string     `xml:"email"`
 	Key         string     `xml:"key,omitempty"`
-	IsActive    bool       `xml:"active"`
 	Password    string     `xml:"password>value,omitempty"`
-	Attributes  Attributes `xml:"attributes>attribute"`
+	IsActive    bool       `xml:"active"`
 }
 
 // UserAttributes contains user attributes
