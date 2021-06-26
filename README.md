@@ -1,11 +1,11 @@
 <p align="center"><a href="#readme"><img src="https://gh.kaos.st/go-crowd.svg"/></a></p>
 
 <p align="center">
-  <a href="https://pkg.re/essentialkaos/go-crowd.v3?docs"><img src="https://gh.kaos.st/godoc.svg" alt="PkgGoDev"></a>
-  <a href="https://goreportcard.com/report/github.com/essentialkaos/go-crowd"><img src="https://goreportcard.com/badge/github.com/essentialkaos/go-crowd"></a>
-  <a href="https://github.com/essentialkaos/go-crowd/actions"><img src="https://github.com/essentialkaos/go-crowd/workflows/CI/badge.svg" alt="GitHub Actions Status" /></a>
-  <a href="https://github.com/essentialkaos/go-crowd/actions?query=workflow%3ACodeQL"><img src="https://github.com/essentialkaos/go-crowd/workflows/CodeQL/badge.svg" /></a>
-  <a href="https://codebeat.co/projects/github-com-essentialkaos-go-crowd-master"><img alt="codebeat badge" src="https://codebeat.co/badges/9aaa0412-47a5-4555-924e-9c9e1d61a3e4" /></a>
+  <a href="https://kaos.sh/g/go-crowd.v3"><img src="https://gh.kaos.st/godoc.svg" alt="PkgGoDev" /></a>
+  <a href="https://kaos.sh/r/go-crowd"><img src="https://kaos.sh/r/go-crowd.svg" alt="GoReportCard" /></a>
+  <a href="https://kaos.sh/w/go-crowd/ci"><img src="https://kaos.sh/w/go-crowd/ci.svg" alt="GitHub Actions CI Status" /></a>
+  <a href="https://kaos.sh/w/go-crowd/codeql"><img src="https://kaos.sh/w/go-crowd/codeql.svg" alt="GitHub Actions CodeQL Status" /></a>
+  <a href="https://kaos.sh/b/go-crowd"><img src="https://kaos.sh/b/9aaa0412-47a5-4555-924e-9c9e1d61a3e4.svg" alt="Codebeat badge" /></a>
   <a href="#license"><img src="https://gh.kaos.st/apache2.svg"></a>
 </p>
 
@@ -19,16 +19,16 @@ _**Note, that this is beta software, so it's entirely possible that there will b
 
 ### Installation
 
-Make sure you have a working Go 1.14+ workspace (_[instructions](https://golang.org/doc/install)_), then:
+Make sure you have a working Go 1.15+ workspace (_[instructions](https://golang.org/doc/install)_), then:
 
 ````
-go get pkg.re/essentialkaos/go-crowd.v3
+go get -d pkg.re/essentialkaos/go-crowd.v3
 ````
 
 For update to latest stable release, do:
 
 ```
-go get -u pkg.re/essentialkaos/go-crowd.v3
+go get -d -u pkg.re/essentialkaos/go-crowd.v3
 ```
 
 ### Usage example
@@ -65,8 +65,8 @@ func main() {
 
 | Branch     | Status |
 |------------|--------|
-| `master` (_Stable_) | [![CI](https://github.com/essentialkaos/go-crowd/workflows/CI/badge.svg?branch=master)](https://github.com/essentialkaos/go-crowd/actions) |
-| `develop` (_Unstable_) | [![CI](https://github.com/essentialkaos/go-crowd/workflows/CI/badge.svg?branch=develop)](https://github.com/essentialkaos/go-crowd/actions) |
+| `master` (_Stable_) | [![CI](https://kaos.sh/w/go-crowd/ci.svg?branch=master)](https://kaos.sh/w/go-crowd/ci?query=branch:master) |
+| `develop` (_Unstable_) | [![CI](https://kaos.sh/w/go-crowd/ci.svg?branch=develop)](https://kaos.sh/w/go-crowd/ci?query=branch:develop) |
 
 ### License
 
