@@ -2,7 +2,7 @@ package crowd
 
 // ////////////////////////////////////////////////////////////////////////////////// //
 //                                                                                    //
-//                         Copyright (c) 2020 ESSENTIAL KAOS                          //
+//                         Copyright (c) 2021 ESSENTIAL KAOS                          //
 //      Apache License, Version 2.0 <https://www.apache.org/licenses/LICENSE-2.0>     //
 //                                                                                    //
 // ////////////////////////////////////////////////////////////////////////////////// //
@@ -10,7 +10,7 @@ package crowd
 import (
 	"testing"
 
-	. "pkg.re/check.v1"
+	. "pkg.re/essentialkaos/check.v1"
 )
 
 // ////////////////////////////////////////////////////////////////////////////////// //
