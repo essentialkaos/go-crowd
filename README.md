@@ -19,16 +19,16 @@ _**Note, that this is beta software, so it's entirely possible that there will b
 
 ### Installation
 
-Make sure you have a working Go 1.16+ workspace (_[instructions](https://golang.org/doc/install)_), then:
+Make sure you have a working Go 1.17+ workspace (_[instructions](https://golang.org/doc/install)_), then:
 
 ````
-go get -d pkg.re/essentialkaos/go-crowd.v3
+go get -d github.com/essentialkaos/go-crowd/v3
 ````
 
 For update to latest stable release, do:
 
 ```
-go get -d -u pkg.re/essentialkaos/go-crowd.v3
+go get -d -u github.com/essentialkaos/go-crowd/v3
 ```
 
 ### Usage example
@@ -38,7 +38,7 @@ package main
 
 import (
   "fmt"
-  "pkg.re/essentialkaos/go-crowd.v3"
+  "github.com/essentialkaos/go-crowd/v3"
 )
 
 func main() {
