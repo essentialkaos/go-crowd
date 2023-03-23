@@ -84,6 +84,10 @@ type UserAttributes struct {
 	Attributes []*Attribute `xml:"attribute"`
 }
 
+type password struct {
+	Value string `xml:"value"`
+}
+
 // ////////////////////////////////////////////////////////////////////////////////// //
 
 // String convert user info to string
