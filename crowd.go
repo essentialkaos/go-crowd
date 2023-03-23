@@ -112,6 +112,30 @@ func (api *API) GetUser(userName string, withAttributes bool) (*User, error) {
 	}
 }
 
+// Login attempts to authenticate a user with the given username and password.
+// It constructs a URL with the given username and sends a POST request to the usermanagement authentication API with the provided password.
+// It returns a pointer to a User object with the user's information on successful authentication, or an error if authentication failed or an unknown error occurred.
+func (api *API) Login(username, val string) (*User, error) {
+	url := "rest/usermanagement/1/authentication?username=" + esc(username)
+  // Create a password object with the given value
+	attrs := &password{
+		Value: val,
+	}
+
+	result := &User{}
+	statusCode, err := api.doRequest("POST", url, result, attrs)
+	if err != nil {
+		return nil, err
+	}
+
+	switch statusCode {
+	case 200:
+		return result, nil
+	default:
+		return nil, makeUnknownError(statusCode)
+	}
+}
+
 // GetUserAttributes returns a list of user attributes
 func (api *API) GetUserAttributes(userName string) (Attributes, error) {
 	result := &UserAttributes{}
