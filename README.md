@@ -15,8 +15,6 @@
 
 `go-crowd` is a Go package for working with [Crowd REST API](https://developer.atlassian.com/server/crowd/crowd-rest-resources/).
 
-_**Note, that this is beta software, so it's entirely possible that there will be some significant bugs. Please report bugs so that we are aware of the issues.**_
-
 ### Installation
 
 Make sure you have a working Go 1.18+ workspace (_[instructions](https://golang.org/doc/install)_), then:
