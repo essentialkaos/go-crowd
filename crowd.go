@@ -117,7 +117,7 @@ func (api *API) GetUser(userName string, withAttributes bool) (*User, error) {
 // It returns a pointer to a User object with the user's information on successful authentication, or an error if authentication failed or an unknown error occurred.
 func (api *API) Login(username, val string) (*User, error) {
 	url := "rest/usermanagement/1/authentication?username=" + esc(username)
-  // Create a password object with the given value
+	// Create a password object with the given value
 	attrs := &password{
 		Value: val,
 	}
