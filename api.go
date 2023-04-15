@@ -86,8 +86,10 @@ type UserAttributes struct {
 
 // ////////////////////////////////////////////////////////////////////////////////// //
 
-type password struct {
-	Value string `xml:"value"`
+// ListingOptions contains options for request with listing objects
+type ListingOptions struct {
+	StartIndex int
+	MaxResults int
 }
 
 // ////////////////////////////////////////////////////////////////////////////////// //
@@ -141,6 +143,21 @@ func (a Attributes) Get(name string) string {
 	}
 
 	return ""
+}
+
+// Encode encodes listing options to URL query string part
+func (l ListingOptions) Encode() string {
+	var result string
+
+	if l.StartIndex > 0 {
+		result += fmt.Sprintf("&start-index=%d", l.StartIndex)
+	}
+
+	if l.MaxResults > 0 {
+		result += fmt.Sprintf("&max-results=%d", l.MaxResults)
+	}
+
+	return result
 }
 
 // Error convert crowd errro to error struct

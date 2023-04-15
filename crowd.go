@@ -32,6 +32,12 @@ type API struct {
 
 // ////////////////////////////////////////////////////////////////////////////////// //
 
+type passwordValue struct {
+	Value string `xml:"value"`
+}
+
+// ////////////////////////////////////////////////////////////////////////////////// //
+
 // API errors
 var (
 	ErrInitEmptyURL      = errors.New("URL can't be empty")
@@ -115,11 +121,11 @@ func (api *API) GetUser(userName string, withAttributes bool) (*User, error) {
 // Login attempts to authenticate a user with the given username and password.
 // It constructs a URL with the given username and sends a POST request to the usermanagement authentication API with the provided password.
 // It returns a pointer to a User object with the user's information on successful authentication, or an error if authentication failed or an unknown error occurred.
-func (api *API) Login(username, val string) (*User, error) {
+func (api *API) Login(username, password string) (*User, error) {
 	url := "rest/usermanagement/1/authentication?username=" + esc(username)
 	// Create a password object with the given value
-	attrs := &password{
-		Value: val,
+	attrs := &passwordValue{
+		Value: password,
 	}
 
 	result := &User{}
@@ -351,7 +357,7 @@ func (api *API) DeleteGroupAttributes(groupName, attrName string) error {
 }
 
 // GetGroupUsers returns the users that are members of the specified group
-func (api *API) GetGroupUsers(groupName, groupType string) ([]*User, error) {
+func (api *API) GetGroupUsers(groupName, groupType string, options ...ListingOptions) ([]*User, error) {
 	result := &struct {
 		Users []*User `xml:"user"`
 	}{}
@@ -360,6 +366,10 @@ func (api *API) GetGroupUsers(groupName, groupType string) ([]*User, error) {
 		"rest/usermanagement/1/group/user/%s?expand=user&groupname=%s",
 		esc(groupType), esc(groupName),
 	)
+
+	if len(options) > 0 {
+		url += options[0].Encode()
+	}
 
 	statusCode, err := api.doRequest("GET", url, result, nil)
 
@@ -378,13 +388,13 @@ func (api *API) GetGroupUsers(groupName, groupType string) ([]*User, error) {
 }
 
 // GetGroupDirectUsers returns the users that are direct members of the specified group
-func (api *API) GetGroupDirectUsers(groupName string) ([]*User, error) {
-	return api.GetGroupUsers(groupName, GROUP_DIRECT)
+func (api *API) GetGroupDirectUsers(groupName string, options ...ListingOptions) ([]*User, error) {
+	return api.GetGroupUsers(groupName, GROUP_DIRECT, options...)
 }
 
 // GetGroupNestedUsers returns the users that are nested members of the specified group
-func (api *API) GetGroupNestedUsers(groupName string) ([]*User, error) {
-	return api.GetGroupUsers(groupName, GROUP_NESTED)
+func (api *API) GetGroupNestedUsers(groupName string, options ...ListingOptions) ([]*User, error) {
+	return api.GetGroupUsers(groupName, GROUP_NESTED, options...)
 }
 
 // GetMemberships returns full details of all group memberships, with users and
@@ -413,14 +423,18 @@ func (api *API) GetMemberships() ([]*Membership, error) {
 }
 
 // SearchUsers searches for users with the specified search restriction
-func (api *API) SearchUsers(cql string) ([]*User, error) {
+func (api *API) SearchUsers(cql string, options ...ListingOptions) ([]*User, error) {
 	result := &struct {
 		Users []*User `xml:"user"`
 	}{}
-	statusCode, err := api.doRequest(
-		"GET", "rest/usermanagement/1/search?entity-type=user&expand=user&restriction="+esc(cql),
-		result, nil,
-	)
+
+	url := "rest/usermanagement/1/search?entity-type=user&expand=user&restriction=" + esc(cql)
+
+	if len(options) > 0 {
+		url += options[0].Encode()
+	}
+
+	statusCode, err := api.doRequest("GET", url, result, nil)
 
 	if err != nil {
 		return nil, err
@@ -437,14 +451,18 @@ func (api *API) SearchUsers(cql string) ([]*User, error) {
 }
 
 // SearchGroups searches for groups with the specified search restriction
-func (api *API) SearchGroups(cql string) ([]*Group, error) {
+func (api *API) SearchGroups(cql string, options ...ListingOptions) ([]*Group, error) {
 	result := &struct {
 		Groups []*Group `xml:"group"`
 	}{}
-	statusCode, err := api.doRequest(
-		"GET", "rest/usermanagement/1/search?entity-type=group&expand=group&restriction="+esc(cql),
-		result, nil,
-	)
+
+	url := "rest/usermanagement/1/search?entity-type=group&expand=group&restriction=" + esc(cql)
+
+	if len(options) > 0 {
+		url += options[0].Encode()
+	}
+
+	statusCode, err := api.doRequest("GET", url, result, nil)
 
 	if err != nil {
 		return nil, err
@@ -544,14 +562,14 @@ func getUserAgent(app, version string) string {
 	if app != "" && version != "" {
 		return fmt.Sprintf(
 			"%s/%s %s/%s (go; %s; %s-%s)",
-			app, version, NAME, VERSION, runtime.Version(),
+			app, version, "Go-Crowd", "3", runtime.Version(),
 			runtime.GOARCH, runtime.GOOS,
 		)
 	}
 
 	return fmt.Sprintf(
 		"%s/%s (go; %s; %s-%s)",
-		NAME, VERSION, runtime.Version(),
+		"Go-Crowd", "3", runtime.Version(),
 		runtime.GOARCH, runtime.GOOS,
 	)
 }
