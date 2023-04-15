@@ -490,7 +490,7 @@ func (api *API) doRequest(method, uri string, result, body interface{}) (int, er
 
 	statusCode := resp.StatusCode()
 
-	if statusCode != 200 && statusCode < 500 {
+	if statusCode != 200 && statusCode >= 500 {
 		return statusCode, decodeInternalError(resp.Body())
 	}
 
