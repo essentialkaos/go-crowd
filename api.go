@@ -160,7 +160,7 @@ func (l ListingOptions) Encode() string {
 	return result
 }
 
-// Error convert crowd errro to error struct
+// Error returns crowd error as standard error struct
 func (e crowdError) Error() error {
 	return errors.New(e.Message)
 }

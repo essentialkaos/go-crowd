@@ -80,14 +80,14 @@ func ExampleAPI_Login() {
 		return
 	}
 
-	currenUser, err := api.Login("john", "MySuppaPAssWOrd")
+	currentUser, err := api.Login("john", "MySuppaPAssWOrd")
 
 	if err != nil {
 		fmt.Printf("Error: %v\n", err)
 		return
 	}
 
-	fmt.Printf("%#v\n", currenUser)
+	fmt.Printf("%#v\n", currentUser)
 }
 
 func ExampleAPI_GetUserAttributes() {
