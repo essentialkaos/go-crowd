@@ -37,12 +37,13 @@ import (
 
 func main() {
   api, err := crowd.NewAPI("https://crowd.domain.com/crowd/", "myapp", "MySuppaPAssWOrd")
-  api.SetUserAgent("MyApp", "1.2.3")
 
   if err != nil {
     fmt.Printf("Error: %v\n", err)
     return
   }
+
+  api.SetUserAgent("MyApp", "1.2.3")
 
   user, err := api.GetUser("john", true)
 
@@ -51,7 +52,7 @@ func main() {
     return
   }
 
-  fmt.Println("%-v\n", user)
+  fmt.Printf("%#v\n", user)
 }
 ```
 

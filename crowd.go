@@ -50,7 +50,7 @@ var (
 
 // ////////////////////////////////////////////////////////////////////////////////// //
 
-// NewAPI create new API struct
+// NewAPI creates new API struct
 func NewAPI(url, app, password string) (*API, error) {
 	switch {
 	case url == "":
@@ -75,7 +75,7 @@ func NewAPI(url, app, password string) (*API, error) {
 	}, nil
 }
 
-// SimplifyAttributes convert slice with attributes to map name->value
+// SimplifyAttributes converts slice with attributes to map name->value
 func SimplifyAttributes(attrs Attributes) map[string]string {
 	result := make(map[string]string)
 
@@ -86,12 +86,12 @@ func SimplifyAttributes(attrs Attributes) map[string]string {
 	return result
 }
 
-// SetUserAgent set user-agent string based on app name and version
+// ////////////////////////////////////////////////////////////////////////////////// //
+
+// SetUserAgent configures user-agent string based on app name and version
 func (api *API) SetUserAgent(app, version string) {
 	api.Client.Name = getUserAgent(app, version)
 }
-
-// ////////////////////////////////////////////////////////////////////////////////// //
 
 // GetUser returns a user
 func (api *API) GetUser(userName string, withAttributes bool) (*User, error) {
@@ -121,8 +121,8 @@ func (api *API) GetUser(userName string, withAttributes bool) (*User, error) {
 // Login attempts to authenticate a user with the given username and password.
 // It constructs a URL with the given username and sends a POST request to the usermanagement authentication API with the provided password.
 // It returns a pointer to a User object with the user's information on successful authentication, or an error if authentication failed or an unknown error occurred.
-func (api *API) Login(username, password string) (*User, error) {
-	url := "rest/usermanagement/1/authentication?username=" + esc(username)
+func (api *API) Login(userName, password string) (*User, error) {
+	url := "rest/usermanagement/1/authentication?username=" + esc(userName)
 	// Create a password object with the given value
 	attrs := &passwordValue{
 		Value: password,
@@ -219,7 +219,7 @@ func (api *API) DeleteUserAttributes(userName, attrName string) error {
 }
 
 // GetUserGroups returns the groups that the user is a member of
-func (api *API) GetUserGroups(userName, groupType string) ([]*Group, error) {
+func (api *API) GetUserGroups(userName, groupType string, options ...ListingOptions) ([]*Group, error) {
 	result := &struct {
 		Groups []*Group `xml:"group"`
 	}{}
@@ -228,6 +228,10 @@ func (api *API) GetUserGroups(userName, groupType string) ([]*Group, error) {
 		"rest/usermanagement/1/user/group/%s?expand=group&username=%s",
 		esc(groupType), esc(userName),
 	)
+
+	if len(options) > 0 {
+		url += options[0].Encode()
+	}
 
 	statusCode, err := api.doRequest("GET", url, result, nil)
 
@@ -246,13 +250,13 @@ func (api *API) GetUserGroups(userName, groupType string) ([]*Group, error) {
 }
 
 // GetUserDirectGroups returns the groups that the user is a direct member of
-func (api *API) GetUserDirectGroups(userName string) ([]*Group, error) {
-	return api.GetUserGroups(userName, GROUP_DIRECT)
+func (api *API) GetUserDirectGroups(userName string, options ...ListingOptions) ([]*Group, error) {
+	return api.GetUserGroups(userName, GROUP_DIRECT, options...)
 }
 
 // GetUserNestedGroups returns the groups that the user is a nested member of
-func (api *API) GetUserNestedGroups(userName string) ([]*Group, error) {
-	return api.GetUserGroups(userName, GROUP_NESTED)
+func (api *API) GetUserNestedGroups(userName string, options ...ListingOptions) ([]*Group, error) {
+	return api.GetUserGroups(userName, GROUP_NESTED, options...)
 }
 
 // GetGroup returns a group
