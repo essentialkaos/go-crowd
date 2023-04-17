@@ -9,11 +9,13 @@
   <a href="#license"><img src="https://gh.kaos.st/apache2.svg"></a>
 </p>
 
-<p align="center"><a href="#installation">Installation</a> • <a href="#usage-example">Usage example</a> • <a href="#build-status">Build Status</a> • <a href="#license">License</a></p>
+<p align="center"><a href="#installation">Installation</a> • <a href="#usage-example">Usage example</a> • <a href="#ci-status">CI Status</a> • <a href="#license">License</a></p>
 
 <br/>
 
 `go-crowd` is a Go package for working with [Crowd REST API](https://developer.atlassian.com/server/crowd/crowd-rest-resources/).
+
+**▲ Please take note that this package support only getting data from Crowd API (_i.e. you cannot create or modify data using this package_).**
 
 ### Installation
 
@@ -35,12 +37,13 @@ import (
 
 func main() {
   api, err := crowd.NewAPI("https://crowd.domain.com/crowd/", "myapp", "MySuppaPAssWOrd")
-  api.SetUserAgent("MyApp", "1.2.3")
 
   if err != nil {
     fmt.Printf("Error: %v\n", err)
     return
   }
+
+  api.SetUserAgent("MyApp", "1.2.3")
 
   user, err := api.GetUser("john", true)
 
@@ -49,11 +52,11 @@ func main() {
     return
   }
 
-  fmt.Println("%-v\n", user)
+  fmt.Printf("%#v\n", user)
 }
 ```
 
-### Build Status
+### CI Status
 
 | Branch     | Status |
 |------------|--------|

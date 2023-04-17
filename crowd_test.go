@@ -48,3 +48,17 @@ func (s *CrowdSuite) TestAttributesHelpers(c *C) {
 	c.Assert(attrs.Get("test"), Equals, "AB CD")
 	c.Assert(attrs.Get("magic"), Equals, "ABCD")
 }
+
+func (s *CrowdSuite) TestListingOptionsEncoder(c *C) {
+	l1 := ListingOptions{}
+	l2 := ListingOptions{MaxResults: 3}
+	l3 := ListingOptions{StartIndex: 5}
+	l4 := ListingOptions{StartIndex: 5, MaxResults: 7}
+	l5 := ListingOptions{StartIndex: -1, MaxResults: 0}
+
+	c.Assert(l1.Encode(), Equals, "")
+	c.Assert(l2.Encode(), Equals, "&max-results=3")
+	c.Assert(l3.Encode(), Equals, "&start-index=5")
+	c.Assert(l4.Encode(), Equals, "&start-index=5&max-results=7")
+	c.Assert(l5.Encode(), Equals, "")
+}
