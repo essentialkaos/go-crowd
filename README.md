@@ -9,21 +9,14 @@
   <a href="#license"><img src="https://gh.kaos.st/apache2.svg"></a>
 </p>
 
-<p align="center"><a href="#installation">Installation</a> • <a href="#usage-example">Usage example</a> • <a href="#ci-status">CI Status</a> • <a href="#license">License</a></p>
+<p align="center"><a href="#usage-example">Usage example</a> • <a href="#ci-status">CI Status</a> • <a href="#license">License</a></p>
 
 <br/>
 
 `go-crowd` is a Go package for working with [Crowd REST API](https://developer.atlassian.com/server/crowd/crowd-rest-resources/).
 
-**▲ Please take note that this package support only getting data from Crowd API (_i.e. you cannot create or modify data using this package_).**
-
-### Installation
-
-Make sure you have a working Go 1.18+ workspace (_[instructions](https://golang.org/doc/install)_), then:
-
-```bash
-go get -u github.com/essentialkaos/go-crowd/v3
-```
+> [!IMPORTANT]
+> **Please note that this package only supports retrieving data from the Crowd API (_i.e. you cannot create or modify data with this package_).**
 
 ### Usage example
 
