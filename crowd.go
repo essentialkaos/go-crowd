@@ -32,7 +32,7 @@ type API struct {
 
 // ////////////////////////////////////////////////////////////////////////////////// //
 
-type passwordValue struct {
+type password struct {
 	Value string `xml:"value"`
 }
 
@@ -121,11 +121,11 @@ func (api *API) GetUser(userName string, withAttributes bool) (*User, error) {
 // Login attempts to authenticate a user with the given username and password.
 // It constructs a URL with the given username and sends a POST request to the usermanagement authentication API with the provided password.
 // It returns a pointer to a User object with the user's information on successful authentication, or an error if authentication failed or an unknown error occurred.
-func (api *API) Login(userName, password string) (*User, error) {
+func (api *API) Login(userName, passWord string) (*User, error) {
 	url := "rest/usermanagement/1/authentication?username=" + esc(userName)
 	// Create a password object with the given value
-	attrs := &passwordValue{
-		Value: password,
+	attrs := &password{
+		Value: passWord,
 	}
 
 	result := &User{}
