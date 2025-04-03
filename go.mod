@@ -1,10 +1,11 @@
 module github.com/essentialkaos/go-crowd/v3
 
 go 1.22.8
+toolchain go1.24.1
 
 require (
 	github.com/essentialkaos/check v1.4.1
-	github.com/valyala/fasthttp v1.59.0
+	github.com/valyala/fasthttp v1.60.0
 )
 
 require (
