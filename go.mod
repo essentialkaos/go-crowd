@@ -1,7 +1,6 @@
 module github.com/essentialkaos/go-crowd/v3
 
-go 1.22.8
-toolchain go1.24.1
+go 1.23.0
 
 require (
 	github.com/essentialkaos/check v1.4.1
