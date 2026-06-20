@@ -1,10 +1,19 @@
+> [!IMPORTANT]
+> ### Project Sunset Notice 🌇
+>
+> ***This project is no longer actively maintained.***
+>
+> After careful consideration, we’ve decided to sunset development and support for this repository. While it has been a valuable effort, we are no longer able to dedicate the time and resources required to maintain it at the level we consider responsible.
+
+----
+
 <p align="center"><a href="#readme"><img src=".github/images/card.svg"/></a></p>
 
 <p align="center">
   <a href="https://kaos.sh/g/go-crowd.v3"><img src=".github/images/godoc.svg" alt="PkgGoDev" /></a>
-  <a href="https://kaos.sh/r/go-crowd"><img src="https://kaos.sh/r/go-crowd.svg" alt="GoReportCard" /></a>
-  <a href="https://kaos.sh/w/go-crowd/ci"><img src="https://kaos.sh/w/go-crowd/ci.svg" alt="GitHub Actions CI Status" /></a>
-  <a href="https://kaos.sh/w/go-crowd/codeql"><img src="https://kaos.sh/w/go-crowd/codeql.svg" alt="GitHub Actions CodeQL Status" /></a>
+  <a href="https://kaos.sh/r/go-crowd"><img src="https://goreportcard.com/badge/github.com/essentialkaos/go-crowd" alt="GoReportCard" /></a>
+  <a href="https://kaos.sh/w/go-crowd/ci"><img src="https://github.com/essentialkaos/go-crowd/actions/workflows/ci.yml/badge.svg" alt="GitHub Actions CI Status" /></a>
+  <a href="https://kaos.sh/w/go-crowd/codeql"><img src="https://github.com/essentialkaos/go-crowd/actions/workflows/codeql.yml/badge.svg" alt="GitHub Actions CodeQL Status" /></a>
   <a href="#license"><img src=".github/images/license.svg"/></a>
 </p>
 
@@ -52,8 +61,8 @@ func main() {
 
 | Branch     | Status |
 |------------|--------|
-| `master` (_Stable_) | [![CI](https://kaos.sh/w/go-crowd/ci.svg?branch=master)](https://kaos.sh/w/go-crowd/ci?query=branch:master) |
-| `develop` (_Unstable_) | [![CI](https://kaos.sh/w/go-crowd/ci.svg?branch=develop)](https://kaos.sh/w/go-crowd/ci?query=branch:develop) |
+| `master` (_Stable_) | [![CI](https://github.com/essentialkaos/go-crowd/actions/workflows/ci.yml/badge.svg?branch=master)](https://kaos.sh/w/go-crowd/ci?query=branch:master) |
+| `develop` (_Unstable_) | [![CI](https://github.com/essentialkaos/go-crowd/actions/workflows/ci.yml/badge.svg?branch=develop)](https://kaos.sh/w/go-crowd/ci?query=branch:develop) |
 
 ### Contributing
 
