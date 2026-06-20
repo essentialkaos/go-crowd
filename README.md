@@ -4,6 +4,15 @@
 > ***This project is no longer actively maintained.***
 >
 > After careful consideration, we’ve decided to sunset development and support for this repository. While it has been a valuable effort, we are no longer able to dedicate the time and resources required to maintain it at the level we consider responsible.
+>
+> #### Forking and continuation
+>
+> If you are interested in taking over maintenance or building upon this project, you are encouraged to fork it.
+>
+> #### Thank you
+>
+> We sincerely appreciate everyone who contributed, reported issues, or used this project. Your support made it worthwhile.
+> </details>
 
 ----
 
